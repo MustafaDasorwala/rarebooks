@@ -28,7 +28,7 @@ class Cart extends Controller
         // load another model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
         $stats_model = $this->loadModel('StatsModel');
-        $amount_of_books = $stats_model->getAmountOfBooks();
+        $amount_of_books = $stats_model->getAmountOfBooksCart();
 
         // load views. within the views we can echo out $songs and $amount_of_songs easily
         require 'application/views/_templates/header.php';
@@ -40,6 +40,13 @@ class Cart extends Controller
         $cart_model = $this->loadModel('CartModel');
         $cart_model->addtocart($i_id, $c_id=0, $qty =1);
         header('location: '.URL.'inventory/detailview/'.$i_id);
+    }
+
+    public function deletefromcart($i_id){
+        $cart_model = $this->loadModel('CartModel');
+        $cart_model->deletefromcart($i_id);
+        header('location: '.URL.'cart/view/');
+
     }
 
 

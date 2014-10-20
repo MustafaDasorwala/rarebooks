@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 class CartModel
 {
@@ -16,9 +17,11 @@ class CartModel
 
     public function getAllBooksCart()
     {
-        $sql = "SELECT * FROM shopping_cart as sc inner join inventory as inv on sc.item_id = inv.item_id";
+        $s_id = session_id();
+        $sql = "SELECT * FROM shopping_cart as sc inner join inventory as inv on sc.item_id = inv.item_id 
+        WHERE session_id = :s_id";
         $query = $this->db->prepare($sql);
-        $query->execute();
+        $query->execute(array('s_id' => $s_id));
         return $query->fetchAll();
     }
 
@@ -27,7 +30,7 @@ class CartModel
         $sql = '';
         if($this->getBook($i_id))
         {
-            $s_id =101;
+            $s_id = session_id();
             if($this->getBookCart($i_id, $s_id)) {
                 $x=$this->getBookCart($i_id, $s_id);
                 $qty = $x[0]->quantity + $qty;
@@ -57,6 +60,15 @@ class CartModel
         }
         return 0;
         
+
+    }
+
+    public function deletefromcart($i_id){
+
+        $s_id = session_id();
+        $sql = "DELETE FROM shopping_cart WHERE item_id = :i_id AND session_id  = :s_id ";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(':i_id' => $i_id, ':s_id' => $s_id));
 
     }
 

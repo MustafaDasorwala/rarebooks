@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * Class Songs
  * This is a demo class.
@@ -39,7 +39,10 @@ class Inventory extends Controller
     public function detailview($inventory_id)
     {
         $inventory_model = $this->loadModel('InventoryModel');
+        $reviews_model = $this->loadModel('ReviewsModel');
         $book = $inventory_model->getBook($inventory_id);
+        $reviews = $reviews_model->getReviews($inventory_id);
+
         require 'application/views/_templates/header.php';
         require 'application/views/inventory/item.php';
         require 'application/views/_templates/footer.php';

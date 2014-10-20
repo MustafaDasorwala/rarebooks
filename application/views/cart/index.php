@@ -1,3 +1,4 @@
+
 <div class="container">
 
     <div>
@@ -9,20 +10,21 @@
         <table>
             <thead style="background-color: #ddd; font-weight: bold;">
             <tr>
-                <td>customerId</td>
-                <td>itemID</td>
-                <td>sessionId</td>
+                <td>Book</td>
+                <td>Price Per Book</td>
                 <td>Qty</td>
+                <td>Total</td>
+                <td>Delete</td>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($cart as $book) { ?>
                 <tr>
-                    <td><?php if (isset($book->customer_id)) echo $book->customer_id; ?></td>
-                    <td>
-                      <?php if (isset($book->item_id)) echo $book->item_id; ?></td>
-                    <td><?php if (isset($book->session_id)) echo $book->session_id; ?></td>
+                    <td><?php if (isset($book->item_name)) echo $book->item_name; ?></td>
+                    <td><?php if (isset($book->price)) echo $book->price; ?></td>
                     <td><?php if (isset($book->quantity)) echo $book->quantity; ?></td>
+                    <td><?php if (isset($book->price) && isset($book->quantity)) echo $book->price*$book->quantity; ?></td>
+                    <td><a href="<?php echo URL . 'cart/deletefromcart/' . $book->item_id; ?>">x</a></td>
                 </tr>
             <?php } ?>
             </tbody>
