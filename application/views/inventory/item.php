@@ -1,8 +1,52 @@
+<script type="text/javascript">
+
+function UpdateCart(id)
+{
+    var temp=id.split("-");
+    var selId = temp[0]+"-select";
+    var select=document.getElementById(selId);
+    var qty =select.options[select.selectedIndex].text;
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            
+        }
+    };
+    //alert(xmlhttp.response.Text);
+    xmlhttp.open("GET","http://127.0.0.1/rarebooks/cart/addtocart/"+temp[0]+"/"+qty,true);
+    xmlhttp.send();
+    location.reload();
+}
+
+</script>
+<form method = "POST" >
+
 <div class="container">
   <h3>Name : <?php echo $book[0]->item_name; ?></h3>
   <h3>Description:</h3>
   <p> <?php echo $book[0]->item_description; ?> </p>
-  <a href=<?php echo URL.'cart/addtocart/'.$book[0]->item_id ?> > add to cart </a>
+  <br>
+  <select <?php if (isset($book[0]->item_id)) {echo "id=".$book[0]->item_id."-select "; 
+                    echo "name=".$book[0]->item_id."-select"; }?>>
+                    <?php
+                    for($i=1;$i<=$book[0]->quantity_on_hand;$i++){
+                        echo '<option value="'.$book[0]->item_id.$i.'">'.$i.'</option>';
+                    }
+                    ?>
+                </select>
+
+  <input type="button" <?php if (isset($book[0]->item_id)) {echo "id=".$book[0]->item_id."-button "; 
+                echo "name=".$book[0]->item_id."-button"; }?> value="Add To Cart" onclick="UpdateCart(this.id);"/>
   <input type="button" id = "review" name = "review" value="Add Review"/>
   </br>
 </div>
@@ -20,3 +64,4 @@
  <?php } ?>
 </table>
 </div>
+</form>

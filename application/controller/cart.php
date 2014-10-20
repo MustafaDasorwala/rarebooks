@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 
 class Cart extends Controller
 {
@@ -22,14 +22,14 @@ class Cart extends Controller
         $cart_model = $this->loadModel('CartModel');
         $c_id = $_SESSION['userid'];
         $cart_model->addtocart($i_id, $c_id, $qty );
-        header('location: '.URL.'inventory/detailview/'.$i_id);
+        //header('location: '.URL.'inventory/detailview/'.$i_id);
     }
 
-    public function updatecart($i_id, $qty =1){
+    public function updatecart($i_id, $qty =0){
         $cart_model = $this->loadModel('CartModel');
         $c_id = $_SESSION['userid'];
-        $cart_model->addtocart($i_id, $c_id, $qty);
-        header('location: '.URL.'cart/view/');
+        $cart_model->addtocart($i_id, $c_id, $qty,1);
+        //header('location: '.URL.'cart/view/');
     }
 
     public function deletefromcart($i_id){

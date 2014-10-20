@@ -26,9 +26,10 @@ class StatsModel
 
     public function getAmountOfBooksCart()
     {
-        $sql = "SELECT SUM(quantity) AS amount_of_books FROM shopping_cart";
+        $s_id = session_id();
+        $sql = "SELECT SUM(quantity) AS amount_of_books FROM shopping_cart WHERE session_id = :s_id";
         $query = $this->db->prepare($sql);
-        $query->execute();
+        $query->execute(array(':s_id' => $s_id));
 
         return $query->fetch()->amount_of_books;
     }
