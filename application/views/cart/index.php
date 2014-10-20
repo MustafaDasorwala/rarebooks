@@ -1,4 +1,5 @@
 
+
 <div class="container">
 
     <div>
@@ -19,11 +20,24 @@
             </thead>
             <tbody>
             <?php foreach ($cart as $book) { ?>
-                <tr>
-                    <td><?php if (isset($book->item_name)) echo $book->item_name; ?></td>
+                <tr <?php if (isset($book->item_name) && isset($book->session_id)) {echo "id=".$book->session_id.$book->item_name; 
+                    echo "name=".$book->session_id.$book->item_name; }?>>
+                    <td  ><?php if (isset($book->item_name)) echo $book->item_name; ?></td>
                     <td><?php if (isset($book->price)) echo $book->price; ?></td>
-                    <td><?php if (isset($book->quantity)) echo $book->quantity; ?></td>
+                    <td><select >
+                        <?php
+                            for($i=1;$i<=$book->quantity_on_hand;$i++){
+                                if($i == $book->quantity){
+                                    echo '<option selected="selected" value="'.$book->item_id.$i.'">'.$i.'</option>';
+                                }
+                                else{
+                                    echo '<option value="'.$book->item_id.$i.'">'.$i.'</option>';
+                                }
+                            }
+                        ?>
+                    </select></td>
                     <td><?php if (isset($book->price) && isset($book->quantity)) echo $book->price*$book->quantity; ?></td>
+                    <td><a href="<?php echo URL . 'cart/updatecart/' . $book->item_id; ?>">update</a></td>
                     <td><a href="<?php echo URL . 'cart/deletefromcart/' . $book->item_id; ?>">x</a></td>
                 </tr>
             <?php } ?>
