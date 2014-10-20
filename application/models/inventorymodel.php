@@ -27,9 +27,111 @@ class InventoryModel
         $sql = "SELECT * FROM inventory WHERE item_id = :id";
         $query = $this->db->prepare($sql);
         $query->execute(array(':id' => $id));
-        return $query->fetchAll();
+        $queryReturn = $query->fetchAll();
+        return $queryReturn;
 
     }
 
+    public function InsertBookInDB($id,$name,$descr,$price,$date,$category,$quantity)
+    {
+        $sql = "INSERT INTO inventory values ('".$id."','".$name."','".$descr."','".$price."','".$date."','".$category."','".$quantity."')";
+        $query = $this->db->prepare($sql);
+        $result = $query->execute();
+        return $result;
+     }
 
+    public function ValidateBookParameters( $dbPOST )
+    {
+        $result = '';
+        $strArray = array( 'name', 'description' );
+        $numericArray = array( 'price', 'quantity' );
+        foreach( $numericArray as $index )
+        { 
+            if( is_numeric( $dbPOST[$index] ) == 0 )
+            {
+                $result = $index . ' is not numeric';
+                return $result;
+             }
+        }
+
+        foreach( $strArray as $index )
+        { 
+            if( strlen( $dbPOST[$index] ) == 0 )
+            {
+                $result = $index . ' is not specified';
+                return $result;
+             }
+        }
+        
+        if( 'Select category' == $dbPOST['category'] )
+        {
+                $result = 'Category was not selected';
+        }
+        return $result;        
+    }
+
+    public function CreateBook( $dbPOST )
+    {
+        $result = $this->ValidateBookParameters( $dbPOST );
+        if( $result == '' )
+        {
+            date_default_timezone_set('America/New_York');
+            $dateToday = date("d-m-Y");
+            $newDate = date("Y-m-d", strtotime($dateToday));
+            
+            $dbresult = $this->InsertBookInDB(   0, $dbPOST['name'],$dbPOST['description'],
+                                                 (int)$dbPOST['price'],$newDate,$dbPOST['category'],
+                                                 (float)$dbPOST['quantity']);
+                                        
+        }
+        return $result;      
+    }
+
+    public function EditBook( $dbPOST )
+    {
+        $result = $this->ValidateBookParameters( $dbPOST );
+        if( $result == '' )
+        {
+            date_default_timezone_set('America/New_York');
+            $dateToday = date("d-m-Y");
+            $newDate = date("Y-m-d", strtotime($dateToday));
+            $itemname = $dbPOST['name'];
+            $description= $dbPOST['description'];
+            $quantity = (int)$dbPOST['quantity'];
+            $price = (float)$dbPOST['price'];
+            $category = $dbPOST['category'];
+            $itemid = (int)$dbPOST['item_id'];
+            
+            $sql = "UPDATE inventory SET item_name = :name,". 
+                                         " item_description = :description,".
+                                         " quantity_on_hand = :quantity,".
+                                         " price = :price,".
+                                         " date_added = :newDate,".
+                                         " category = :category".
+                                         " WHERE item_id = :id";
+                                         
+            $par = array(   "id" => $itemid,
+                            "name" => $itemname,
+                            "description" =>$description,
+                            "quantity" => $quantity,
+                            "price" => $price,
+                            "newDate" => $newDate,
+                            "category" => $category );
+                                        
+            $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $query->execute( $par );
+        }
+        return $result;
+           
+    }
+
+    public function DeleteBook( $item_id )
+    {
+        $sql = "DELETE FROM inventory WHERE item_id = $item_id";
+        $query = $this->db->prepare($sql);
+        $result = $query->execute();
+        return $result;
+           
+    }
+    
 }
