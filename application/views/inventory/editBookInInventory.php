@@ -11,7 +11,7 @@
         case 'Create':
             $buttonAction = "Cancel";
             $buttonSubmit = "Insert";
-            $urlDestination = "index/";      
+            $urlDestination = "inventoryView/";      
             break;
     }
   ?>

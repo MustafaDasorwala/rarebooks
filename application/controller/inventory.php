@@ -66,6 +66,27 @@ class Inventory extends Controller
         require 'application/views/_templates/footer.php';
     }
 
+    public function inventoryView( )
+    {
+        // simple message to show where you are
+        //echo 'Message from Controller: You are in the Controller: Inventory, using the method index().';
+
+        // load a model, perform an action, pass the returned data to a variable
+        // NOTE: please write the name of the model "LikeThis"
+        $inventory_model = $this->loadModel('InventoryModel');
+        $inventory = $inventory_model->getAllBooks();
+
+        // load another model, perform an action, pass the returned data to a variable
+        // NOTE: please write the name of the model "LikeThis"
+        $stats_model = $this->loadModel('StatsModel');
+        $amount_of_books = $stats_model->getAmountOfBooks();
+
+        // load views. within the views we can echo out inventory
+        require 'application/views/_templates/header.php';
+        require 'application/views/inventory/inventoryView.php';
+        require 'application/views/_templates/footer.php';
+     }
+    
     public function detailview($inventory_id)
     {
         $inventory_model = $this->loadModel('InventoryModel');
@@ -112,10 +133,11 @@ class Inventory extends Controller
         if( $result == '' )
         {
             // where to go after song has been added
-            header('location: ' . URL . 'inventory/index');       
+            header('location: ' . URL . 'inventory/inventoryView');       
         }
         else
         {
+            $action="Create";
             echo "<script type='text/javascript'>alert( '$result' );</script>";
             require 'application/views/_templates/header.php';
             require 'application/views/inventory/editBookInInventory.php';
@@ -130,7 +152,7 @@ class Inventory extends Controller
         if( $result == '' )
         {
             // where to go after song has been added
-            header('location: ' . URL . 'inventory/index');       
+            header('location: ' . URL . 'inventory/inventoryView');       
         }
         else
         {
@@ -143,7 +165,7 @@ class Inventory extends Controller
         $inventory_model = $this->loadModel('InventoryModel');
         $result = $inventory_model->DeleteBook( $item_id );
         // where to go after song has been added
-        header('location: ' . URL . 'inventory/index');       
+        header('location: ' . URL . 'inventory/inventoryView');       
 
     }
 
