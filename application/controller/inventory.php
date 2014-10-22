@@ -10,7 +10,8 @@ class Inventory extends Controller
      * PAGE: index
      * This method handles what happens when you move to http://php-mvn/inventory/index
      */
-    public function index()
+
+    public function index($col = 'id')
     {
         // simple message to show where you are
         //echo 'Message from Controller: You are in the Controller: Inventory, using the method index().';
@@ -19,6 +20,18 @@ class Inventory extends Controller
         // NOTE: please write the name of the model "LikeThis"
         $inventory_model = $this->loadModel('InventoryModel');
         $inventory = $inventory_model->getAllBooks();
+        if($col == 'Id'){
+            $inventory = $inventory_model->getAllBooks();
+        }
+        elseif($col == 'Name'){
+            $inventory = $inventory_model->getAllBooksSortByName();
+        }
+        elseif($col == 'Category'){
+            $inventory = $inventory_model->getAllBooksSortByCategory();
+        }
+        elseif($col == 'Price'){
+            $inventory = $inventory_model->getAllBooksSortByPrice();
+        }
 
         // load another model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
@@ -104,6 +117,26 @@ class Inventory extends Controller
         header('location: ' . URL . 'inventory/index');       
 
     }
+
+    public function index2($col)
+    {
+ 
+        $inventory_model = $this->loadModel('InventoryModel');
+        if($col == "id"){
+            $inventory = $inventory_model->getAllBooks();
+        }
+
+
+        $stats_model = $this->loadModel('StatsModel');
+        $amount_of_books = $stats_model->getAmountOfBooks();
+
+
+        require 'application/views/_templates/header.php';
+        require 'application/views/inventory/index.php';
+        require 'application/views/_templates/footer.php';
+    }
+
+
 
 }
 

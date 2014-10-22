@@ -40,6 +40,30 @@ class InventoryModel
         return $result;
      }
 
+    public function getAllBooksSortByName()
+    {
+        $sql = "SELECT * FROM inventory ORDER BY item_name ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getAllBooksSortByCategory()
+    {
+        $sql = "SELECT * FROM inventory ORDER BY category ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getAllBooksSortByPrice()
+    {
+        $sql = "SELECT * FROM inventory ORDER BY price ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function ValidateBookParameters( $dbPOST )
     {
         $result = '';

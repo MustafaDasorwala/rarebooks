@@ -45,7 +45,7 @@ function UpdateCart(id)
                 <thead style="background-color: #ddd; font-weight: bold;">
                     <tr>
                         <td>Book</td>
-                        <td>Price Per Book</td>
+                        <td>Unit Price</td>
                         <td>Qty</td>
                         <td>Total</td>
                         <td>Update</td>
