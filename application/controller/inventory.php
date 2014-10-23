@@ -37,6 +37,7 @@ class Inventory extends Controller
         // NOTE: please write the name of the model "LikeThis"
         $stats_model = $this->loadModel('StatsModel');
         $amount_of_books = $stats_model->getAmountOfBooks();
+        $category = $inventory_model->getCategories();
 
         // load views. within the views we can echo out inventory
         require 'application/views/_templates/header.php';
@@ -118,25 +119,20 @@ class Inventory extends Controller
 
     }
 
-    public function index2($col)
-    {
- 
+    public function filterbycategory(){
+        $cat = $_POST['filterCategory-select'];
         $inventory_model = $this->loadModel('InventoryModel');
-        if($col == "id"){
-            $inventory = $inventory_model->getAllBooks();
-        }
-
-
+        $inventory = $inventory_model->filterbycategory($cat);
         $stats_model = $this->loadModel('StatsModel');
         $amount_of_books = $stats_model->getAmountOfBooks();
-
+        $category = $inventory_model->getCategories();
 
         require 'application/views/_templates/header.php';
         require 'application/views/inventory/index.php';
         require 'application/views/_templates/footer.php';
+
+
     }
-
-
 
 }
 

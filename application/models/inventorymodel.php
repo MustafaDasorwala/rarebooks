@@ -78,20 +78,37 @@ class InventoryModel
              }
         }
 
-        foreach( $strArray as $index )
-        { 
+       foreach( $strArray as $index )
+        {
             if( strlen( $dbPOST[$index] ) == 0 )
             {
                 $result = $index . ' is not specified';
                 return $result;
              }
         }
-        
+
         if( 'Select category' == $dbPOST['category'] )
         {
                 $result = 'Category was not selected';
         }
-        return $result;        
+        return $result;
+    }
+    
+    public function getCategories(){
+
+        $sql = "SELECT DISTINCT(category) FROM inventory";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+
+    }
+
+    public function filterbycategory($cat){
+        $sql = "SELECT * FROM inventory WHERE category = :cat";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(':cat' => $cat));
+        return $query->fetchAll();
+
     }
 
     public function CreateBook( $dbPOST )

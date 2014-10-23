@@ -1,12 +1,59 @@
-<div class=container>
-   <h3>Collection</h3>
+<script type="text/javascript">
+
+function filter(id)
+{
+    var temp=id.split("-");
+    var selId = temp[0]+"-select";
+    var select=document.getElementById(selId);
+    var cat =select.options[select.selectedIndex].text;
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            
+        }
+    };
+    //alert(xmlhttp.response.Text);
+    //if(cat != 'all')
+    //{
+        xmlhttp.open("GET","http://127.0.0.1/rarebooks/inventory/filterbycategory/"+cat,true);
+        xmlhttp.send();
+        location.reload();
+    //}
+}
+
+</script>
+<form method = "POST" action = "http://127.0.0.1/rarebooks/inventory/filterbycategory">
+<div class="container">
+
     <div>
         <h3>Books in Collection: <?php echo $amount_of_books; ?></h3>
         <h3>Collection</h3>
         <div>
             <h3>Total Number of Books: <?php echo $amount_of_books; ?></h3>
         </div>
-
+        <label>Category Filter</label>
+        <select id="filterCategory-select" name="filterCategory-select">
+            <option>all</option>
+            <?php 
+                if(isset($category)){
+                    foreach ($category as $catx) { 
+                        echo '<option value="'.$catx->category.'">'.$catx->category.'</option>';
+                    }
+                }
+            ?>
+        </select>
+        <input type="submit" id="filterCategory-button" name="filterCategory-button" value="Filter";"/>
+        <br>
         <table>
             <thead style="background-color: #ddd; font-weight: bold;">
             <tr>
@@ -29,3 +76,4 @@
             </tbody>
         </table>
 </div>
+</form>
