@@ -11,7 +11,7 @@ class Inventory extends Controller
      * This method handles what happens when you move to http://php-mvn/inventory/index
      */
 
-    public function index($col = 'id')
+    public function index($col = 'id', $factor = 'all', $cat = '')
     {
         // simple message to show where you are
         //echo 'Message from Controller: You are in the Controller: Inventory, using the method index().';
@@ -21,6 +21,10 @@ class Inventory extends Controller
         $inventory_model = $this->loadModel('InventoryModel');
         $cart_model = $this->loadModel('cartmodel');
         $inventory = $inventory_model->getAllBooks();
+
+        /*if($factor != 'all' || $cat != ''){
+            $inventory 
+        }*/
         if($col == 'Id'){
             $inventory = $inventory_model->getAllBooks();
         }
@@ -34,8 +38,6 @@ class Inventory extends Controller
             $inventory = $inventory_model->getAllBooksSortByPrice();
         }
 
-        // load another model, perform an action, pass the returned data to a variable
-        // NOTE: please write the name of the model "LikeThis"
         $stats_model = $this->loadModel('StatsModel');
         $amount_of_books = $stats_model->getAmountOfBooks();
         $category = $inventory_model->getCategories();

@@ -94,6 +94,14 @@ class InventoryModel
         return $result;
     }
     
+    public function getAllBooksSortBy($factor,$cat)
+    {
+        $sql = "SELECT * FROM inventory ORDER BY :factor ASC WHERE category = :cat ";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(":factor" => $factor, ":cat" => $cat));
+        return $query->fetchAll();
+    }
+
     public function getCategories(){
 
         $sql = "SELECT DISTINCT(category) FROM inventory";
