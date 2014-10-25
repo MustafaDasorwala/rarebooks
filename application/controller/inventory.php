@@ -45,6 +45,24 @@ class Inventory extends Controller
         require 'application/views/_templates/footer.php';
     }
 
+    public function search($searchtext = '')
+    {
+ 
+        $inventory_model = $this->loadModel('InventoryModel');
+        $cart_model = $this->loadModel('cartmodel');
+        $inventory = $inventory_model->getAllBooks();
+        $stats_model = $this->loadModel('StatsModel');
+        $amount_of_books = $stats_model->getAmountOfBooks();
+        $category = $inventory_model->getCategories();
+        if($searchtext != ''){
+            $inventory = $inventory_model->searchByName($searchtext);
+        }
+
+        require 'application/views/_templates/header.php';
+        require 'application/views/inventory/index.php';
+        require 'application/views/_templates/footer.php';
+    }
+
     public function detailview($inventory_id)
     {
         $inventory_model = $this->loadModel('InventoryModel');

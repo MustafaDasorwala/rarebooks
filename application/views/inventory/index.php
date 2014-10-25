@@ -1,4 +1,11 @@
 <script type="text/javascript">
+function search(id)
+{
+    var selId = "search-text";
+    var txtBox=document.getElementById(selId);
+    var searchtext =txtBox.value;
+    location.href = "http://127.0.0.1/rarebooks/inventory/search/"+searchtext;
+}
 
 function filter(id)
 {
@@ -41,6 +48,10 @@ function filter(id)
         <div>
             <h3>Total Number of Books: <?php echo $amount_of_books; ?></h3>
         </div>
+        <label>Search</label>
+        <input type = "text" id = "search-text" name = "search-text" value = ""/>
+        <input type = "button" id = "button-text" name = "button-text" value = "go" onclick="search(this.id);"/>
+        <br><br>
         <label>Category Filter</label>
         <select id="filterCategory-select" name="filterCategory-select">
             <option>all</option>
