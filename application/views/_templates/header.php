@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+    //session_start();
+    if(!isset($_SESSION['userid'])){
+        $_SESSION['userid'] = 0;
+    }
+?>
 <html lang="en">
 <head>
     <meta charset="utf-8">

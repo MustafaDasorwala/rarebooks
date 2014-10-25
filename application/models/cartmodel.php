@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 class CartModel
 {
@@ -21,19 +21,21 @@ class CartModel
         $sql = "SELECT * FROM shopping_cart as sc inner join inventory as inv on sc.item_id = inv.item_id 
         WHERE session_id = :s_id";
         $query = $this->db->prepare($sql);
-        $query->execute(array('s_id' => $s_id));
+        $query->execute(array(':s_id' => $s_id));
         return $query->fetchAll();
     }
 
-    public function addtocart($i_id, $c_id=0, $qty =1){
+    public function addtocart($i_id, $c_id=0, $qty =1, $upd=0){
 
         $sql = '';
         if($this->getBook($i_id))
         {
             $s_id = session_id();
             if($this->getBookCart($i_id, $s_id)) {
-                $x=$this->getBookCart($i_id, $s_id);
-                $qty = $x[0]->quantity + $qty;
+                if($upd == 0){
+                    $x=$this->getBookCart($i_id, $s_id);
+                    $qty = $x[0]->quantity + $qty;
+                }
 
                 $sql = "UPDATE shopping_cart SET quantity = :qty WHERE session_id  = :s_id  AND item_id = :i_id";
                 $query = $this->db->prepare($sql);
@@ -56,7 +58,8 @@ class CartModel
                 $query = $this->db->prepare($sql);
                 $query->execute(array(':i_id'=> $i_id, ':s_id' => $s_id, ':qty' => $qty));*/
             
-            return $query->num_rows;
+            //return $query->num_rows;
+                return 1;
         }
         return 0;
         
