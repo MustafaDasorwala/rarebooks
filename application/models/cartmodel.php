@@ -25,12 +25,24 @@ class CartModel
         return $query->fetchAll();
     }
 
-    public function addtocart($i_id, $c_id=0, $qty =1, $upd=0){
+    public function addtocart($i_id, $c_id=0, $qty =0, $upd=0){
 
         $sql = '';
+        $s_id = session_id();
+        $qty_on_hand = $this->getQuantity($i_id);
+        $qty_in_cart = $this->getBookCartCountByItemId($i_id);
+        $qty_in_current_cart=0;
+        if($this->getBookCart($i_id, $s_id)){
+            $qty_in_current_cart = $this->getBookCart($i_id, $s_id);
+        }
+        $qty_updated = $qty_in_current_cart[0]->quantity + $qty_on_hand[0]->quantity_on_hand - $qty_in_cart[0]->Book_Cart_SUM;
+    
+        if($qty_updated < $qty){
+                return 0;
+        }
         if($this->getBook($i_id))
         {
-            $s_id = session_id();
+            
             if($this->getBookCart($i_id, $s_id)) {
                 if($upd == 0){
                     $x=$this->getBookCart($i_id, $s_id);
@@ -84,11 +96,37 @@ class CartModel
     }
 
     public function getBookCart($id, $sid){
-        $sql = "SELECT * FROM shopping_cart WHERE item_id = :id AND session_id = :sid";
+        $sql = "SELECT * FROM shopping_cart WHERE item_id = :id AND session_id = :sid ";
         $query = $this->db->prepare($sql);
         $query->execute(array(':id' => $id, ':sid' => $sid));
         return $query->fetchAll();
 
+    }
+
+    public function getBookCartCountByItemId($id){
+
+        $sql = "SELECT SUM(quantity) as Book_Cart_SUM FROM shopping_cart WHERE item_id = :id ";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(':id' => $id));
+        return $query->fetchAll();
+
+    }
+
+    public function getQuantity($id){
+
+        $sql = "SELECT quantity_on_hand FROM inventory WHERE item_id = :id";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(':id' => $id));
+        return $query->fetchAll();
+
+    }
+
+    public function getQuantityInCart(){
+    
+        $sql = "SELECT item_id,SUM(quantity) as sum_qty_cart FROM shopping_cart GROUP BY item_id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 
 

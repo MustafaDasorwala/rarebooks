@@ -45,7 +45,7 @@ function UpdateCart(id)
                 <thead style="background-color: #ddd; font-weight: bold;">
                     <tr>
                         <td>Book</td>
-                        <td>Price Per Book</td>
+                        <td>Unit Price</td>
                         <td>Qty</td>
                         <td>Total</td>
                         <td>Update</td>
@@ -61,7 +61,7 @@ function UpdateCart(id)
                     <td><select <?php if (isset($book->item_id) && isset($book->session_id)) {echo "id=".$book->session_id."-".$book->item_id."-select "; 
                     echo "name=".$book->session_id."-".$book->item_id."-select"; }?>>
                     <?php
-                    for($i=1;$i<=$book->quantity_on_hand;$i++){
+                    for($i=1;$i<=$book->quantity+$book->quantity_on_hand-intval($qty_in_cart[$book->item_id]) ;$i++){
                         if($i == $book->quantity){
                             echo '<option selected="selected" value="'.$book->item_id.$i.'">'.$i.'</option>';
                         }

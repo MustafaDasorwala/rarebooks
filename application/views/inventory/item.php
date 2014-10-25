@@ -39,7 +39,7 @@ function UpdateCart(id)
   <select <?php if (isset($book[0]->item_id)) {echo "id=".$book[0]->item_id."-select "; 
                     echo "name=".$book[0]->item_id."-select"; }?>>
                     <?php
-                    for($i=1;$i<=$book[0]->quantity_on_hand;$i++){
+                    for($i=1; $i<=($book[0]->quantity_on_hand - $qty_in_cart);$i++){
                         echo '<option value="'.$book[0]->item_id.$i.'">'.$i.'</option>';
                     }
                     ?>

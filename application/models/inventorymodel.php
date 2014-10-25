@@ -40,6 +40,30 @@ class InventoryModel
         return $result;
      }
 
+    public function getAllBooksSortByName()
+    {
+        $sql = "SELECT * FROM inventory ORDER BY item_name ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getAllBooksSortByCategory()
+    {
+        $sql = "SELECT * FROM inventory ORDER BY category ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getAllBooksSortByPrice()
+    {
+        $sql = "SELECT * FROM inventory ORDER BY price ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function ValidateBookParameters( $dbPOST )
     {
         $result = '';
@@ -54,20 +78,54 @@ class InventoryModel
              }
         }
 
-        foreach( $strArray as $index )
-        { 
+       foreach( $strArray as $index )
+        {
             if( strlen( $dbPOST[$index] ) == 0 )
             {
                 $result = $index . ' is not specified';
                 return $result;
              }
         }
-        
+
         if( 'Select category' == $dbPOST['category'] )
         {
                 $result = 'Category was not selected';
         }
-        return $result;        
+        return $result;
+    }
+    
+    public function getAllBooksSortBy($factor,$cat)
+    {
+        $sql = "SELECT * FROM inventory ORDER BY :factor ASC WHERE category = :cat ";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(":factor" => $factor, ":cat" => $cat));
+        return $query->fetchAll();
+    }
+
+    public function getCategories(){
+
+        $sql = "SELECT DISTINCT(category) FROM inventory";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+
+    }
+
+    public function filterbycategory($cat){
+        if($cat == 'all'){
+            $sql = "SELECT * FROM inventory ";
+            $query = $this->db->prepare($sql);
+            $query->execute();
+
+        }
+        else{
+            $sql = "SELECT * FROM inventory WHERE category = :cat";
+            $query = $this->db->prepare($sql);
+            $query->execute(array(':cat' => $cat));
+        }
+        
+        return $query->fetchAll();
+
     }
 
     public function CreateBook( $dbPOST )
@@ -124,6 +182,14 @@ class InventoryModel
         return $result;
            
     }
+
+    public function searchByName($searchtext){
+        $sql = "SELECT * FROM inventory WHERE item_name LIKE :searchtext";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(":searchtext" => $searchtext));
+        return $query->fetchAll();
+    }
+
 
     public function DeleteBook( $item_id )
     {

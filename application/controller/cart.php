@@ -12,6 +12,13 @@ class Cart extends Controller
 
         $stats_model = $this->loadModel('StatsModel');
         $amount_of_books = $stats_model->getAmountOfBooksCart();
+        $t_qty_in_cart = $cart_model->getQuantityInCart();
+        $qty_in_cart= array();
+        foreach ($t_qty_in_cart as $t){
+
+            $qty_in_cart[$t->item_id] = $t->sum_qty_cart;
+
+        }
 
         require 'application/views/_templates/header.php';
         require 'application/views/cart/index.php';
