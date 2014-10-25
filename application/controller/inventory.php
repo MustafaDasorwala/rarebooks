@@ -19,6 +19,7 @@ class Inventory extends Controller
         // load a model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
         $inventory_model = $this->loadModel('InventoryModel');
+        $cart_model = $this->loadModel('cartmodel');
         $inventory = $inventory_model->getAllBooks();
         if($col == 'Id'){
             $inventory = $inventory_model->getAllBooks();
@@ -39,7 +40,6 @@ class Inventory extends Controller
         $amount_of_books = $stats_model->getAmountOfBooks();
         $category = $inventory_model->getCategories();
 
-        // load views. within the views we can echo out inventory
         require 'application/views/_templates/header.php';
         require 'application/views/inventory/index.php';
         require 'application/views/_templates/footer.php';
@@ -49,7 +49,13 @@ class Inventory extends Controller
     {
         $inventory_model = $this->loadModel('InventoryModel');
         $book = $inventory_model->getBook($inventory_id);
-        
+        $reviews = $reviews_model->getReviews($inventory_id);
+        $cart_model = $this->loadModel('cartmodel');
+        $tmp_qty= $cart_model->getBookCartCountByItemId($inventory_id);
+        if(isset($tmp_qty[0])){
+            $qty_in_cart = $tmp_qty[0]->Book_Cart_SUM;
+        }
+
         require 'application/views/_templates/header.php';
         require 'application/views/inventory/item.php';
         require 'application/views/_templates/footer.php';
