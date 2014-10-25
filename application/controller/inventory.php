@@ -11,6 +11,7 @@ class Inventory extends Controller
      * This method handles what happens when you move to http://php-mvn/inventory/index
      */
 
+    
     public function index($col = 'id', $factor = 'all', $cat = '')
     {
         // simple message to show where you are
@@ -68,6 +69,7 @@ class Inventory extends Controller
     public function detailview($inventory_id)
     {
         $inventory_model = $this->loadModel('InventoryModel');
+        $reviews_model = $this->loadModel('ReviewsModel');
         $book = $inventory_model->getBook($inventory_id);
         $reviews = $reviews_model->getReviews($inventory_id);
         $cart_model = $this->loadModel('cartmodel');
