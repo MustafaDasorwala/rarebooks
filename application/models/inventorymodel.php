@@ -184,9 +184,9 @@ class InventoryModel
     }
 
     public function searchByName($searchtext){
-        $sql = "SELECT * FROM inventory WHERE item_name LIKE :searchtext";
+        $sql = "SELECT * FROM inventory WHERE item_name LIKE '%".$searchtext."%'";
         $query = $this->db->prepare($sql);
-        $query->execute(array(":searchtext" => $searchtext));
+        $query->execute();
         return $query->fetchAll();
     }
 
