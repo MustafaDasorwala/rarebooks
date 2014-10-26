@@ -23,7 +23,7 @@ function UpdateCart(id)
         }
     };
     //alert(xmlhttp.response.Text);
-    xmlhttp.open("GET","http://127.0.0.1/rarebooks/cart/addtocart/"+temp[0]+"/"+qty,true);
+    xmlhttp.open("GET","http://localhost:8080/rarebooks/cart/addtocart/"+temp[0]+"/"+qty,true);
     xmlhttp.send();
     location.reload();
 }
@@ -47,7 +47,9 @@ function UpdateCart(id)
 
   <input type="button" <?php if (isset($book[0]->item_id)) {echo "id=".$book[0]->item_id."-button "; 
                 echo "name=".$book[0]->item_id."-button"; }?> value="Add To Cart" onclick="UpdateCart(this.id);"/>
+  <a href=<?php echo URL.'review/index/'.$book[0]->item_id?> >
   <input type="button" id = "review" name = "review" value="Add Review"/>
+   </a>
   </br>
 </div>
 <div class="container">
@@ -62,6 +64,8 @@ function UpdateCart(id)
     	<td>Review : <?php if (isset($review->review_text)) echo $review->review_text; ?></td>
     </tr>
  <?php } ?>
+
+
 </table>
 </div>
 </form>

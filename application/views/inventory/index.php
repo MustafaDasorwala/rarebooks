@@ -4,7 +4,7 @@ function search(id)
     var selId = "search-text";
     var txtBox=document.getElementById(selId);
     var searchtext =txtBox.value;
-    location.href = "http://127.0.0.1/rarebooks/inventory/search/"+searchtext;
+    location.href = "http://localhost:8080/rarebooks/inventory/search/"+searchtext;
 }
 
 function filter(id)
@@ -32,14 +32,14 @@ function filter(id)
     //alert(xmlhttp.response.Text);
     //if(cat != 'all')
     //{
-        xmlhttp.open("GET","http://127.0.0.1/rarebooks/inventory/filterbycategory/"+cat,true);
+        xmlhttp.open("GET","http://localhost:8080/rarebooks/inventory/filterbycategory/"+cat,true);
         xmlhttp.send();
         location.reload();
     //}
 }
 
 </script>
-<form method = "POST" action = "http://127.0.0.1/rarebooks/inventory/filterbycategory">
+<form method = "POST" action = "http://localhost:8080/rarebooks/inventory/filterbycategory">
 <div class="container">
 
     <div>

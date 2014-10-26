@@ -65,7 +65,7 @@ class LoginModel
 
                 // database query, getting all the info of the selected user (allows login via email address in the
                 // username field)
-                $sql = "SELECT username, email_address, password
+                $sql = "SELECT customer_id as userid,username, email_address, password
                         FROM customers
                         WHERE username = '" . $username . "' AND password = '" . $password . "';";
 						//echo $sql;
@@ -90,6 +90,7 @@ class LoginModel
                         $_SESSION['username'] = $result_row->username;
                         $_SESSION['email_address'] = $result_row->email_address;
                         $_SESSION['login'] = 1;
+                         $_SESSION['userid'] =  $result_row->userid;
 
 						return "1";
                     } else {
