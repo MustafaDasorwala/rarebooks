@@ -25,7 +25,7 @@ function UpdateCart(id)
         }
     };
     //alert(xmlhttp.response.Text);
-    xmlhttp.open("GET","http://127.0.0.1/rarebooks/cart/updatecart/"+temp[1]+"/"+qty,true);
+    xmlhttp.open("GET","http://localhost:8080/rarebooks/cart/updatecart/"+temp[1]+"/"+qty,true);
     xmlhttp.send();
     location.reload();
 }
@@ -77,7 +77,15 @@ function UpdateCart(id)
                 echo "name=".$book->session_id."-".$book->item_id."-button"; }?> value="Update" onclick="UpdateCart(this.id);" /></td>
                 <td><a href="<?php echo URL . 'cart/deletefromcart/' . $book->item_id; ?>">x</a></td>
             </tr>
+
             <?php } ?>
+                 <tr>
+                 <a href=<?php echo URL.'cart/checkout'?> >
+                       <input id="button" type="button" name="ConfirmOrder" value="CheckOut"> 
+                    </a>
+                 
+            </tr>
+
         </tbody>
     </table>
 </div>

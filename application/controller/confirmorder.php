@@ -43,6 +43,13 @@ class confirmorder extends Controller
        // header('location: '.URL.'inventory/detailview/'.$i_id);
     }
 
+      public function thanks(){
+
+       
+       require 'application/views/confirmorder/thanks.php';
+      
+    }
+
     //WORK ABOVE FOR PLACING ORDER
 
    //  public function updatecart($i_id, $qty =1){

@@ -1,15 +1,8 @@
 <div class="container">
 <h1>Add a review</h1>
-<form method=POST action="<?php echo URL; ?>review/addreview">
+<form method=POST action="<?php echo URL; ?>review/addreview/">
+	<input type="hidden" id="id" name="id" value=<?php echo $id; ?>>
 Customer Item Review form:
-<br />
-<br />
-Username: <br />
-<input type="text" maxlength="25" name="uname" >
-<br />
-<br />
-Item_id: <br />
-<input type="text" maxlength="8" name="item" >
 <br />
 <br />
 Review: <br />

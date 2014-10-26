@@ -24,7 +24,8 @@ class ReviewsModel
 
 	public function addreview($customer_id, $item, $item_review, $item_rating)
     {
-        $sql = "Insert into reviews (review_text, item_rating, item_id, customer_id) values (:item_review, :item_rating, :item, :customer_id)";
+       // $customer_id=$_SESSION["userid"];
+        $sql = "INSERT INTO reviews (review_text, item_rating, item_id, customer_id) values (:item_review, :item_rating, :item, :customer_id)";
         $query = $this->db->prepare($sql);
         $query->execute(array(':item_review' => $item_review, ':item_rating' => $item_rating, ':item' => $item, ':customer_id' => $customer_id));
     }

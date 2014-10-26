@@ -151,6 +151,7 @@ $eventid=1;
                 //printf($temp);
 
                 //Customer Profile Work End   
+                  header ('location: ' . URL . 'confirmorder/thanks');
 
                     }
 
