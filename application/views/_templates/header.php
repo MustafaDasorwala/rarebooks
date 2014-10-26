@@ -23,23 +23,8 @@
 <!-- header -->
 <div class="container">
   <h3> Rare Books </h3>
-  
-    <h4><?php 
-    if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) {  echo 'Welcome '.$_SESSION['username'];}
-else {
 
-echo 'Welcome Guest';
-
-
-}   ?> </h4>
-
-
- <br>
-      
-    <a href=<?php echo URL?> > Home </a><span rowspan='3'></span>
- 
-    <a href=<?php echo URL.'cart/view'?> > Cart </a><span rowspan='3'></span>
-      <?php
+    <?php
     if(!isset($_SESSION)) {
         session_start();
     }
@@ -69,29 +54,36 @@ echo 'Welcome Guest';
         echo '</table>';
         echo '</h4>';
     }
-
-   
-    if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) 
-          {  
+    else
+    {        
+        if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) 
+        {  
+            echo '<h4>Welcome '.$_SESSION['username'].'</h4><br>';
+            echo '<a id="logout" ';
+            echo 'href="'.URL . 'login/Logout/">';
+            echo 'Logout</a>';
+        }
+        else 
+        {
+            echo '<h4>Welcome Guest</h4><br>';
+            echo '<a id="Login" ';
+            echo 'href="'.URL . 'login/index/">';
+            echo 'Log in</a>';
+            echo '<a id="signup" ';
+            echo 'href="'.URL . 'signup/index/">';
+            echo 'Sign up</a>';
+        }
         
-         echo '<a id="logout" ';
-         echo 'href="'.URL . 'login/Logout/">';
-         echo 'Logout</a>';
-          }
-          else {
-          
-          
-         echo '<a id="Login" ';
-         echo 'href="'.URL . 'login/index/">';
-         echo 'Log in</a>';
-          echo '<a id="signup" ';
-         echo 'href="'.URL . 'signup/index/">';
-         echo 'Sign up</a>';
+        echo '<a href=';
+        echo URL;
+        echo "> Home </a><span rowspan='3'></span>";
         
-          }
-          ?>
+        echo '<a href=';
+        echo URL;
+        echo "cart/view > Cart </a><span rowspan='3'></span>"; 
 
-    
-  
+        
+    }
+    ?>
 </div>
 
