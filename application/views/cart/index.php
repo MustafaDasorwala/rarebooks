@@ -53,10 +53,12 @@ function UpdateCart(id)
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($cart as $book) { ?>
+                    <?php foreach ($cart as $book) {
+                    if($book->quantity_on_hand>0) { ?>
                     <tr <?php if (isset($book->item_id) && isset($book->session_id)) {echo "id=".$book->session_id."-".$book->item_id." "; 
                     echo "name=".$book->session_id."-".$book->item_id; }?>>
-                    <td  ><?php if (isset($book->item_name)) echo $book->item_name; ?></td>
+                    
+                    <td  ><a href="<?php echo URL . 'inventory/detailview/' . $book->item_id; ?>" ><?php if (isset($book->item_name)) echo $book->item_name; ?></a></td>
                     <td><?php if (isset($book->price)) echo $book->price; ?></td>
                     <td><select <?php if (isset($book->item_id) && isset($book->session_id)) {echo "id=".$book->session_id."-".$book->item_id."-select "; 
                     echo "name=".$book->session_id."-".$book->item_id."-select"; }?>>
@@ -78,7 +80,7 @@ function UpdateCart(id)
                 <td><a href="<?php echo URL . 'cart/deletefromcart/' . $book->item_id; ?>">x</a></td>
             </tr>
 
-            <?php } ?>
+            <?php } } ?>
                  <tr>
                  <a href=<?php echo URL.'cart/checkout'?> >
                        <input id="button" type="button" name="ConfirmOrder" value="CheckOut"> 

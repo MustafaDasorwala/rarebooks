@@ -75,15 +75,18 @@ function filter(id)
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($inventory as $book) { ?>
-                <tr>
+            <?php 
+            foreach ($inventory as $book) { 
+            if($book->quantity_on_hand>0) { ?>
+                <tr> 
+                  
                     <td><?php if (isset($book->item_id)) echo $book->item_id; ?></td>
                     <td><a href="<?php echo URL . 'inventory/detailview/' . $book->item_id; ?>">
                       <?php if (isset($book->item_name)) echo $book->item_name; ?></a></td>
                     <td><?php if (isset($book->category)) echo $book->category; ?></td>
                     <td><?php if (isset($book->price)) echo $book->price; ?></td>
                 </tr>
-            <?php } ?>
+            <?php }} ?>
             </tbody>
         </table>
 </div>
