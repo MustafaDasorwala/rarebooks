@@ -60,32 +60,35 @@ class confirmordermodel
                     $count=$query->fetch()->count ; 
 
                     if($count>0)
-                    { //insert into event
+                    { 
+                   
+                    //insert into event
 
-               // $sql="Insert into events (customer_id, profile_id, cc_holder_name, credit_card_number, ip_address, date_and_time, description) 
-               //  select  * from (
-               //      select :customer_id as cust_id ,
-               //      (
-               //       ifnull((select profile_id from customer_profile where customer_id= :customer_id  and credit_card_number=:credit_card_number),0)
-               //      )   as profile_id
-               //          ,:cc_holder_name as cc_holder_name,:credit_card_number as credit_card_number,:ipaddress as ip_address,NOW() as date_and_time,
-               //          'Sale Denied - Bad Credit Card' as description
-               //  ) as temp; ";
+               $sql="Insert into events (customer_id, profile_id, cc_holder_name, credit_card_number, ip_address, date_and_time, description) 
+                select  * from (
+                    select :customer_id as cust_id ,
+                    (
+                     ifnull((select profile_id from customer_profile where customer_id= :customer_id  and credit_card_number=:credit_card_number),0)
+                    )   as profile_id
+                        ,:cc_holder_name as cc_holder_name,:credit_card_number as credit_card_number,:ipaddress as ip_address,NOW() as date_and_time,
+                        'Sale Denied - Bad Credit Card' as description
+                ) as temp; ";
 
 
-                    //       $sql="Insert into events (customer_id, profile_id, cc_holder_name, credit_card_number, ip_address, date_and_time, description) 
-                    // select :customer_id ,0 
-                    //             ,:cc_holder_name,:credit_card_number,:ipaddress ,01/01/01 10:00:00 ,
+                    //       $sql="Insert into events (customer_id, cc_holder_name, credit_card_number, ip_address, date_and_time, description) 
+                    // select 2 , 
+                    //             ,'waq',123123123,'192.168.1.1' ,'01/01/01 10:00:00' ,
                     //             'description' ; ";
                        
-                //print($sql);
-                // $query->execute(array(':customer_id' => $customer_id,':customer_id' => $customer_id,':credit_card_number' => $credit_card_number,':cc_holder_name' 
-                //     => $cc_holder_name,':credit_card_number' => $credit_card_number,':ipaddress' => $ipaddress));
-
-                     //   $query->execute(array(':customer_id' => $customer_id,':cc_holder_name' => $cc_holder_name,':credit_card_number' => $credit_card_number,':ipaddress' => $ipaddress));
-
-                     // $eventid = $this->db->lastInsertId();
-$eventid=1;
+                // print($sql);
+                $query = $this->db->prepare($sql);
+                $query->execute(array(':customer_id' => $customer_id,':cc_holder_name' 
+                    => $cc_holder_name,':credit_card_number' => $credit_card_number,':ipaddress' => $ipaddress));
+                  // $query->execute();
+                      // $query->execute(array(':customer_id' => $customer_id,':credit_card_number' => $credit_card_number,':ipaddress' => $ipaddress));
+//,':cc_holder_name' => $cc_holder_name
+                     $eventid = $this->db->lastInsertId();
+                  //$eventid=1;
                         if($eventid>0)
                         {
 
