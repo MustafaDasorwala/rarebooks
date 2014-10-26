@@ -29,6 +29,7 @@ class CartModel
 
         $sql = '';
         $s_id = session_id();
+        print($s_id);
         $qty_on_hand = $this->getQuantity($i_id);
         $qty_in_cart = $this->getBookCartCountByItemId($i_id);
         $qty_in_current_cart=0;
