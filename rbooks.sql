@@ -441,8 +441,8 @@ ADD CONSTRAINT `customer_profile_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES 
 --
 ALTER TABLE `events`
 ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-ADD CONSTRAINT `events_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `customer_profile` (`profile_id`),
-ADD CONSTRAINT `events_ibfk_3` FOREIGN KEY (`credit_card_number`) REFERENCES `cc_hotlist` (`credit_card_number`);
+ADD CONSTRAINT `events_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `customer_profile` (`profile_id`);
+-- ADD CONSTRAINT `events_ibfk_3` FOREIGN KEY (`credit_card_number`) REFERENCES `cc_hotlist` (`credit_card_number`);
 
 --
 -- Constraints for table `ordered_items`
