@@ -53,7 +53,7 @@ if(isset($_GET['success']) && $_GET['success']!="" && $_GET['success']=="1")
 
             </td>
         </tr>
-        <tr> <td>Name on Card</td><td> <input type="text" name="cname" value="<?php echo $_POST['cname']; ?>"
+        <tr> <td>Name on Card</td><td> <input type="text" name="cname" readonly="true"  value="<?php echo $_POST['cname']; ?>"
 
 placeholder="Name(As on card)" required></td> </tr> 
         <tr> <td>Card Number</td><td> <input type="text" name="cnumber" readonly="true"  value="<?php echo $_POST['cnumber']; ?>"
