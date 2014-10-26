@@ -193,13 +193,29 @@ class InventoryModel
 
     public function DeleteBook( $item_id )
     {
-       
-
-        $sql = "UPDATE inventory SET quantity_on_hand=0 WHERE item_id = :item_id";
+        
+        $reduceCount = $this->GetNUmberOfBooksInCart($item_id);
+        $sql = "UPDATE inventory SET quantity_on_hand=:reduce_count WHERE item_id = :item_id";
         $query = $this->db->prepare($sql);
-        $result = $query->execute(array(':item_id'=>$item_id));
+        $result = $query->execute(array(':item_id'=>$item_id, ':reduce_count'=>$reduceCount));
         return $result;
            
     }
     
+    function GetNUmberOfBooksInCart($id)
+    {
+        $sql = "SELECT * FROM shopping_cart WHERE item_id = :id";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(':id' => $id));
+        $queryReturn = $query->fetchAll();
+
+        $total = 0;
+        foreach( $queryReturn as $cartItem )
+        {
+            $total += $cartItem->quantity; 
+        }
+        return $total;
+
+    }
+
 }
