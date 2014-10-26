@@ -41,8 +41,15 @@ function FillBilling(f) {
                 </tr>
             
                 <?php } ?>
-
+       <!--  <tr>
+            <td colspan="3" align="center">
+                Customer Profiles
+            </td>
+        </tr> -->
+              
                         <tr>
+
+
             <td colspan="3" align="center">
                 <h4>
                     Credit Card Details

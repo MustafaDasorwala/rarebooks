@@ -16,9 +16,11 @@ class PaymentModel
 
     public function getAllPaymentProfile()
     {
-        $sql = "SELECT * FROM customer_profile";
+        session_start();
+        $userid=$_SESSION["userid"];
+        $sql = "SELECT * FROM customer_profile where customer_id=:userid";
         $query = $this->db->prepare($sql);
-        $query->execute();
+        $query->execute(array(':userid'=>$userid));
         return $query->fetchAll();
     }
 
@@ -73,10 +75,14 @@ class PaymentModel
     
     public function insertProfileInDB($ccName,$bAddress,$ccNumber,$eMonth,$eYear,$sAddress)
     {
-        $sql = "INSERT INTO customer_profile values (   0,0,'".$sAddress."','".$ccNumber."','".$ccName.
+
+        $sql = "INSERT INTO customer_profile
+        (customer_id, shipping_address, credit_card_number, cc_holder_name, billing_address, expiration_date_year,expiration_date_month) 
+        values (".$_SESSION["userid"].",'".$sAddress."','".$ccNumber."','".$ccName.
                                                         "','".$bAddress."','".$eYear."','".$eMonth."')";
         $query = $this->db->prepare($sql);
         $result = $query->execute();
+        //printf($result);
         return $result;
      }
 

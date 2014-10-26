@@ -193,9 +193,11 @@ class InventoryModel
 
     public function DeleteBook( $item_id )
     {
-        $sql = "DELETE FROM inventory WHERE item_id = $item_id";
+       
+
+        $sql = "UPDATE inventory SET quantity_on_hand=0 WHERE item_id = :item_id";
         $query = $this->db->prepare($sql);
-        $result = $query->execute();
+        $result = $query->execute(array(':item_id'=>$item_id));
         return $result;
            
     }
