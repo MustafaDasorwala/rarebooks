@@ -45,5 +45,19 @@ class Cart extends Controller
         header('location: '.URL.'cart/view/');
 
     }
+    
+   public function checkout()
+    {
+
+        $cart_model = $this->loadModel('CartModel');
+        $cart = $cart_model->getAllBooksCart();
+
+        $stats_model = $this->loadModel('StatsModel');
+        $amount_of_books = $stats_model->getAmountOfBooksCart();
+
+        require 'application/views/_templates/header.php';
+        require 'application/views/cart/checkout.php';
+        require 'application/views/_templates/footer.php';
+    }
 
 }
