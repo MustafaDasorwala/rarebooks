@@ -135,7 +135,15 @@ class confirmordermodel
                 inner join orders o on o.customer_id=sc.customer_id
                 where o.order_id=:id and o.customer_id=:customer_id;
 
-                delete from shopping_cart where customer_id=:customer_id;";
+               
+              update inventory i 
+              inner join shopping_cart sc on sc.item_id=i.item_id and 
+              customer_id=:customer_id
+              Set i.quantity_on_hand=i.quantity_on_hand-quantity;
+
+                delete from shopping_cart where customer_id=:customer_id;
+
+                  ";
 
 
 
@@ -149,27 +157,35 @@ class confirmordermodel
 
  //Customer Profile Work Start              
               //if checkbox selected so then insert
+             //  print($saveprofile);
 if($saveprofile==1){
+
+ //printf('Inside Save Profile Befory Query');
+
           $sql = "INSERT INTO customer_profile(customer_id, shipping_address, credit_card_number, cc_holder_name, billing_address,expiration_date_year, expiration_date_month)  
                 SELECT * FROM (SELECT :customer_id as customer_id,:shipping_address as shipping_address,:credit_card_number as credit_card_number,:cc_holder_name as cc_holder_name,:billing_address as billing_address,
                   :expiration_date_year as expiration_date_year,:expiration_date_month as expiration_date_month) as TMP 
                 WHERE NOT EXISTS (
                 SELECT 1 FROM customer_profile cp
                 WHERE cp.credit_card_number = :credit_card_number 
-               ) LIMIT 1;";
+               ) LIMIT 1;
+
+              ";
 
 
                    $query = $this->db->prepare($sql);
                    $query->execute(array(':customer_id' => $customer_id,':shipping_address' => $shipping_address,':credit_card_number' => $credit_card_number,
-                   ':expiration_date_year' => $expiration_date_year, ':expiration_date_month' => $expiration_date_month,  ':cc_holder_name' => $cc_holder_name,':billing_address' => $billing_address,':expiration_date' => $expiration_date));
+                   ':expiration_date_year' => $expiration_date_year, ':expiration_date_month' => $expiration_date_month,  ':cc_holder_name' => $cc_holder_name,':billing_address' => $billing_address));
                   
 
 
                   $profile_id = $this->db->lastInsertId();
+
+                // printf('Profile Inserted '.$profile_id);
                 //printf($temp);
 }
                 //Customer Profile Work End   
-                  header ('location: ' . URL . 'confirmorder/thanks');
+                header ('location: ' . URL . 'confirmorder/thanks');
 
                     }
 
