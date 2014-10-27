@@ -69,6 +69,7 @@
             echo 'Sign up</a>';
         }
         
+        
         echo '<a href=';
         echo URL;
         echo "> Home </a><span rowspan='3'></span>";

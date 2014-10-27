@@ -11,7 +11,18 @@ class Inventory extends Controller
      * This method handles what happens when you move to http://php-mvn/inventory/index
      */
 
-    
+    public function checkadmin1(){
+
+        if(session_id() == '') {
+            session_start();
+        }
+        if(isset($_SESSION['isadmin']) && $_SESSION['isadmin'] == 1){
+
+            header('location: ' . URL . 'inventory/inventoryView');
+
+        }
+    }
+
     public function index($col = 'id', $factor = 'all', $cat = '')
     {
         // simple message to show where you are
@@ -19,6 +30,8 @@ class Inventory extends Controller
 
         // load a model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
+
+        $this->checkadmin1();
         $inventory_model = $this->loadModel('InventoryModel');
         $cart_model = $this->loadModel('cartmodel');
         $inventory = $inventory_model->getAllBooks();
@@ -51,6 +64,7 @@ class Inventory extends Controller
     public function search($searchtext = '')
     {
  
+        $this->checkadmin1();
         $inventory_model = $this->loadModel('InventoryModel');
         $cart_model = $this->loadModel('cartmodel');
         $inventory = $inventory_model->getAllBooks();
@@ -73,6 +87,7 @@ class Inventory extends Controller
 
         // load a model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
+
         $inventory_model = $this->loadModel('InventoryModel');
 
         if( $this->VerifyAdminLogin( ) == 1 )
@@ -97,6 +112,7 @@ class Inventory extends Controller
     
     public function detailview($inventory_id)
     {
+        $this->checkadmin1();
         $inventory_model = $this->loadModel('InventoryModel');
         $reviews_model = $this->loadModel('ReviewsModel');
         $book = $inventory_model->getBook($inventory_id);
@@ -218,6 +234,7 @@ class Inventory extends Controller
     }
 
     public function filterbycategory(){
+        $this->checkadmin1();
         $cat = $_POST['filterCategory-select'];
         $inventory_model = $this->loadModel('InventoryModel');
         $inventory = $inventory_model->filterbycategory($cat);

@@ -25,6 +25,16 @@ class confirmordermodel
         return $query->fetchAll();
     }
 
+    public function getAllPaymentProfile()
+    {
+        session_start();
+        $userid=$_SESSION["userid"];
+        $sql = "SELECT * FROM customer_profile where customer_id=:userid";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(':userid'=>$userid));
+        return $query->fetchAll();
+    }
+
 //WORK BELOW FUNCTION FOR PLACING ORDER
     //EMBED MUKESH FUNCTION HERE 
 
@@ -40,17 +50,18 @@ class confirmordermodel
     }
 
 
-    public function addtoorder(){
+    public function addtoorder($saveprofile){
 //strip_tags($_SESSION['userid']);
        
-                            $customer_id = "2";//$_SESSION["userid"];
+                            $customer_id = $_SESSION["userid"];
                             $shipping_address = strip_tags($_POST['shipaddr']);
                             $credit_card_number = strip_tags($_POST['cnumber']);
                             $cc_holder_name = strip_tags($_POST['cname']);
                             $billing_address = strip_tags($_POST['billaddr']);
-                            $expiration_date = strip_tags($_POST['expdate']);
-                            $ipaddress = "192.168.1.1";//$_SERVER['REMOTE_ADDR'];
-
+                            $expiration_date_year = strip_tags($_POST['expiration_date_year']);
+                             $expiration_date_month = strip_tags($_POST['expiration_date_month']);
+                            $ipaddress = $_SERVER['REMOTE_ADDR'];
+                            
 //Check in HotList . If exists create a log entry and exit . Other wise proceed with order
         $sql=" select count(credit_card_number) as count from cc_hotlist where credit_card_number=:credit_card_number
             ";
@@ -122,7 +133,9 @@ class confirmordermodel
                 select :id as order_id ,sc.item_id,sc.quantity 
                 from shopping_cart sc 
                 inner join orders o on o.customer_id=sc.customer_id
-                where o.order_id=:id and o.customer_id=:customer_id";
+                where o.order_id=:id and o.customer_id=:customer_id;
+
+                delete from shopping_cart where customer_id=:customer_id;";
 
 
 
@@ -136,9 +149,10 @@ class confirmordermodel
 
  //Customer Profile Work Start              
               //if checkbox selected so then insert
-
-          $sql = "INSERT INTO customer_profile(customer_id, shipping_address, credit_card_number, cc_holder_name, billing_address,    expiration_date)  
-                SELECT * FROM (SELECT :customer_id as customer_id,:shipping_address as shipping_address,:credit_card_number as credit_card_number,:cc_holder_name as cc_holder_name,:billing_address as billing_address,:expiration_date as expiration_date) as TMP 
+if($saveprofile==1){
+          $sql = "INSERT INTO customer_profile(customer_id, shipping_address, credit_card_number, cc_holder_name, billing_address,expiration_date_year, expiration_date_month)  
+                SELECT * FROM (SELECT :customer_id as customer_id,:shipping_address as shipping_address,:credit_card_number as credit_card_number,:cc_holder_name as cc_holder_name,:billing_address as billing_address,
+                  :expiration_date_year as expiration_date_year,:expiration_date_month as expiration_date_month) as TMP 
                 WHERE NOT EXISTS (
                 SELECT 1 FROM customer_profile cp
                 WHERE cp.credit_card_number = :credit_card_number 
@@ -146,13 +160,14 @@ class confirmordermodel
 
 
                    $query = $this->db->prepare($sql);
-                   $query->execute(array(':customer_id' => $customer_id,':shipping_address' => $shipping_address,':credit_card_number' => $credit_card_number,':cc_holder_name' => $cc_holder_name,':billing_address' => $billing_address,':expiration_date' => $expiration_date));
+                   $query->execute(array(':customer_id' => $customer_id,':shipping_address' => $shipping_address,':credit_card_number' => $credit_card_number,
+                   ':expiration_date_year' => $expiration_date_year, ':expiration_date_month' => $expiration_date_month,  ':cc_holder_name' => $cc_holder_name,':billing_address' => $billing_address,':expiration_date' => $expiration_date));
                   
 
 
                   $profile_id = $this->db->lastInsertId();
                 //printf($temp);
-
+}
                 //Customer Profile Work End   
                   header ('location: ' . URL . 'confirmorder/thanks');
 

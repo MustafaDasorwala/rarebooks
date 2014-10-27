@@ -59,9 +59,19 @@ placeholder="Name(As on card)" required></td> </tr>
         <tr> <td>Card Number</td><td> <input type="text" name="cnumber" readonly="true"  value="<?php echo $_POST['cnumber']; ?>"
 
 placeholder="Credit Card Number" required></td> </tr> 
-        <tr> <td>Expiration Date</td><td> <input type="text" readonly="true" name="expdate"  value="<?php echo $_POST['expdate']; ?>"
+       <!--  <tr> <td>Expiration Date</td><td> <input type="text" readonly="true" name="expdate"  value="<?php echo $_POST['expdate']; ?>"
 
-placeholder="Expiration Date(mm/yy)" required></td> </tr> 
+placeholder="Expiration Date(mm/yy)" required></td> </tr>  -->
+    <tr> 
+    <td>Expiration month</td>
+        <td>
+                <input type="text" id="expiration_date_month" readonly="true" value="<?php echo $_POST['expiration_date_month']; ?>" name="expiration_date_month">   
+        </td>
+        <td>Year</td>
+        <td> <input type="text" id="expiration_date_year" readonly="true" value="<?php echo $_POST['expiration_date_year']; ?>" name="expiration_date_year"></td>
+                     <!-- value='<?php if (isset($ccProfile[0]->expiration_date_year)) echo $ccProfile[0]->expiration_date_year; ?>' -->
+<!-- <td>Expiration Date</td><td> <input type="text" name="expdate" value="" placeholder="Expiration Date(mm/yy)" required></td>  -->
+</tr> 
         <tr> <td>Billing Address</td><td> <input type="text" readonly="true" id="billaddr" name="billaddr"  value="<?php echo $_POST['billaddr']; ?>" 
 
 placeholder="Billing Address" required></td> </tr>
@@ -71,10 +81,12 @@ placeholder="Billing Address" required></td> </tr>
 value="" placeholder="Shipping Address" required></td> </tr>   
             <tr>
                 <td>
+                      <input type="hidden" name="SaveProfile" value="<?php echo $_POST['Save']; ?>"/>
                    <input id="button" type="submit" onclick="submitForm('<?php echo URL; ?>confirmorder/Order')"  name="submit_Order" value="Place Order">  
 
  
                  <!--  <a href="<?php echo URL.'cart/checkout'?>"> -->
+
                        <input id="button" type="submit" onclick="submitForm('<?php echo URL; ?>cart/checkout')" name="Cancel_Order" value="Edit Details"> 
                    <!--  </a> -->
                    

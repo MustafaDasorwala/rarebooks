@@ -25,6 +25,16 @@ class CartModel
         return $query->fetchAll();
     }
 
+    // public function getAllPaymentProfile()
+    // {
+    //     session_start();
+    //     $userid=$_SESSION["userid"];
+    //     $sql = "SELECT * FROM customer_profile where customer_id=:userid";
+    //     $query = $this->db->prepare($sql);
+    //     $query->execute(array(':userid'=>$userid));
+    //     return $query->fetchAll();
+    // }
+
     public function addtocart($i_id, $c_id=0, $qty =0, $upd=0){
 
         $sql = '';
