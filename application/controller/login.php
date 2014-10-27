@@ -56,8 +56,13 @@ class Login extends Controller
 
 	public function Logout()
 	{
-	session_start();
-	session_destroy();
+    session_start();
+    session_unset();
+    session_destroy();
+    session_write_close();
+    setcookie(session_name(),'',0,'/');
+    session_regenerate_id(true);;
+    
 	 header('location: ' . URL . 'inventory/index');
 	
 	}

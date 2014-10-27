@@ -4,7 +4,11 @@ function search(id)
     var selId = "search-text";
     var txtBox=document.getElementById(selId);
     var searchtext =txtBox.value;
-    location.href = "http://localhost:8080/rarebooks/inventory/search/"+searchtext;
+   // alert('hi');
+//alert('<?php echo URL;?>'+"inventory/search/"+searchtext);
+//+"inventory/search/1"
+    location.href = '<?php echo URL;?>'+"inventory/search/"+searchtext;
+//http://localhost:8080/rarebooks
 }
 
 function filter(id)
@@ -72,6 +76,7 @@ function filter(id)
                 <td><a href="<?php echo URL . 'inventory/index/Name'; ?>">Name</a></td>
                 <td><a href="<?php echo URL . 'inventory/index/Category'; ?>">Category</a></td>
                 <td><a href="<?php echo URL . 'inventory/index/Price'; ?>">Price</a></td>
+                <td> Add to Cart</td>
             </tr>
             </thead>
             <tbody>
@@ -79,12 +84,14 @@ function filter(id)
             foreach ($inventory as $book) { 
             if($book->quantity_on_hand>0) { ?>
                 <tr> 
-                  
+
                     <td><?php if (isset($book->item_id)) echo $book->item_id; ?></td>
                     <td><a href="<?php echo URL . 'inventory/detailview/' . $book->item_id; ?>">
                       <?php if (isset($book->item_name)) echo $book->item_name; ?></a></td>
                     <td><?php if (isset($book->category)) echo $book->category; ?></td>
                     <td><?php if (isset($book->price)) echo $book->price; ?></td>
+                    <td><a href="<?php echo URL . 'inventory/detailview/' . $book->item_id; ?>">
+                      <input type="button" value="add"/></a></td>
                 </tr>
             <?php }} ?>
             </tbody>

@@ -38,6 +38,7 @@ class confirmorder extends Controller
         {
               $order_model = $this->loadModel('confirmordermodel');
               //$c_id = $_SESSION['userid'];
+              echo 'hi';
               $order_model->addtoorder();
         }
        // header('location: '.URL.'inventory/detailview/'.$i_id);

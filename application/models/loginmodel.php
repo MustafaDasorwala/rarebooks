@@ -85,12 +85,26 @@ class LoginModel
 					  
 					session_start();
 					
+                    $sessionid=session_id();
+                    $sql = "update shopping_cart 
+                            set customer_id=:userid
+                            where session_id=:sessionid";
+
+                        $par = array(   ":userid" => $result_row->userid,
+                                        ":sessionid" => $sessionid
+                                    );
+                                        
+                        $query = $this->db->prepare($sql);
+                        $query->execute( $par );
+                         //$result = $query->execute(array(':item_id'=>$item_id));
                         // write user data into PHP SESSION (a file on your server)
 						//echo session_id();
                         $_SESSION['username'] = $result_row->username;
                         $_SESSION['email_address'] = $result_row->email_address;
                         $_SESSION['login'] = 1;
                          $_SESSION['userid'] =  $result_row->userid;
+
+                       $this->UpdateCartAtLogin();
 
 						return "1";
                     } else {
@@ -117,6 +131,41 @@ class LoginModel
             }
         }
 	}
+
+    public function UpdateCartAtLogin()
+    {
+        $sessionid=session_id();
+        $customer_id=$_SESSION["userid"];
+
+         $sql="CREATE TEMPORARY TABLE cart (
+          `customer_id` int(10) unsigned DEFAULT NULL,
+          `item_id` int(10) unsigned NOT NULL DEFAULT '0',
+          `session_id` varchar(100) NOT NULL DEFAULT '0',
+          `quantity` int(11) DEFAULT NULL,
+          PRIMARY KEY (`item_id`,`session_id`)
+        );
+        insert into cart(customer_id, item_id, session_id, quantity)
+        select :customer_id as customer_id,item_id as item_id,:sessionid as session_id,sum(sc.quantity) as quantity
+        from shopping_cart sc
+        where customer_id=:customer_id OR session_id=:sessionid
+        group by item_id ;
+
+
+        delete from shopping_cart where session_id=:sessionid OR 
+        customer_id=:customer_id;
+
+        insert into shopping_cart(customer_id, item_id, session_id, quantity)
+        select customer_id, item_id, session_id, quantity from cart;
+
+
+        drop table cart;";
+
+         $query = $this->db->prepare($sql);
+            $query->execute(array(':sessionid' => $sessionid,':customer_id' =>$customer_id ));
+
+           // $return 1;
+
+    }
  /*
     public function getAllBooks()
     {
