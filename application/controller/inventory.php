@@ -74,17 +74,25 @@ class Inventory extends Controller
         // load a model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
         $inventory_model = $this->loadModel('InventoryModel');
-        $inventory = $inventory_model->getAllBooks();
 
-        // load another model, perform an action, pass the returned data to a variable
-        // NOTE: please write the name of the model "LikeThis"
-        $stats_model = $this->loadModel('StatsModel');
-        $amount_of_books = $stats_model->getAmountOfBooks();
+        if( $this->VerifyAdminLogin( ) == 1 )
+        {
+            $inventory = $inventory_model->getAllBooks();
+            // load another model, perform an action, pass the returned data to a variable
+            // NOTE: please write the name of the model "LikeThis"
+            $stats_model = $this->loadModel('StatsModel');
+            $amount_of_books = $stats_model->getAmountOfBooks();
 
-        // load views. within the views we can echo out inventory
-        require 'application/views/_templates/header.php';
-        require 'application/views/inventory/inventoryView.php';
-        require 'application/views/_templates/footer.php';
+            // load views. within the views we can echo out inventory
+            require 'application/views/_templates/header.php';
+            require 'application/views/inventory/inventoryView.php';
+            require 'application/views/_templates/footer.php';
+        }
+        else
+        {
+            // where to go after failed authentication
+            header('location: ' . URL );            
+        }  
      }
     
     public function detailview($inventory_id)
@@ -106,47 +114,73 @@ class Inventory extends Controller
     
     public function EditBookView($inventory_id)
     {
-        $inventory_model = $this->loadModel('InventoryModel');
-        $book = $inventory_model->getBook($inventory_id);
-        $action = 'Edit';
- 
-        require 'application/views/_templates/header.php';
-        require 'application/views/inventory/editBookInInventory.php';
-        require 'application/views/_templates/footer.php';
-    }
-    
-    public function CreateBookView()
-    {
-       $inventory_model = $this->loadModel('InventoryModel');
-       $action="Create";
-       require 'application/views/_templates/header.php';
-       require 'application/views/inventory/editBookInInventory.php';
-       require 'application/views/_templates/footer.php';
- 
-    }
-
-    public function CreateBook( )
-    {
-        $inventory_model = $this->loadModel('InventoryModel');
-        $result = $inventory_model->CreateBook( $_POST );
-
-        if( $result == '' )
+        if( $this->VerifyAdminLogin( ) == 1 )
         {
-            // where to go after song has been added
-            header('location: ' . URL . 'inventory/inventoryView');       
-        }
-        else
-        {
-            $action="Create";
-            echo "<script type='text/javascript'>alert( '$result' );</script>";
+            $inventory_model = $this->loadModel('InventoryModel');
+            $book = $inventory_model->getBook($inventory_id);
+            $action = 'Edit';
+     
             require 'application/views/_templates/header.php';
             require 'application/views/inventory/editBookInInventory.php';
             require 'application/views/_templates/footer.php';
         }
+        else
+        {
+            // where to go after failed authentication
+            header('location: ' . URL );            
+        }  
+    }
+    
+    public function CreateBookView()
+    {
+        if( $this->VerifyAdminLogin( ) == 1 )
+        {
+           $inventory_model = $this->loadModel('InventoryModel');
+           $action="Create";
+           require 'application/views/_templates/header.php';
+           require 'application/views/inventory/editBookInInventory.php';
+           require 'application/views/_templates/footer.php';
+        }
+        else
+        {
+            // where to go after failed authentication
+            header('location: ' . URL );            
+        }  
+
+    }
+
+    public function CreateBook( )
+    {
+        if( $this->VerifyAdminLogin( ) == 1 )
+        {
+            $inventory_model = $this->loadModel('InventoryModel');
+            $result = $inventory_model->CreateBook( $_POST );
+
+            if( $result == '' )
+            {
+                // where to go after song has been added
+                header('location: ' . URL . 'inventory/inventoryView');       
+            }
+            else
+            {
+                $action="Create";
+                echo "<script type='text/javascript'>alert( '$result' );</script>";
+                require 'application/views/_templates/header.php';
+                require 'application/views/inventory/editBookInInventory.php';
+                require 'application/views/_templates/footer.php';
+            }
+        }
+        else
+        {
+            // where to go after failed authentication
+            header('location: ' . URL );            
+        }  
    }
    
     public function EditBook( )
     {
+        if( $this->VerifyAdminLogin( ) == 1 )
+        {
         $inventory_model = $this->loadModel('InventoryModel');
         $result = $inventory_model->EditBook( $_POST );
         if( $result == '' )
@@ -158,14 +192,28 @@ class Inventory extends Controller
         {
             echo "<script type='text/javascript'>alert( '$result' );</script>";
         } 
+        }
+        else
+        {
+            // where to go after failed authentication
+            header('location: ' . URL );            
+        }  
     }
 
     public function DeleteBook( $item_id )
     {
-        $inventory_model = $this->loadModel('InventoryModel');
-        $result = $inventory_model->DeleteBook( $item_id );
-        // where to go after song has been added
-        header('location: ' . URL . 'inventory/inventoryView');       
+        if( $this->VerifyAdminLogin( ) == 1 )
+        {
+            $inventory_model = $this->loadModel('InventoryModel');
+            $result = $inventory_model->DeleteBook( $item_id );
+            // where to go after song has been added
+            header('location: ' . URL . 'inventory/inventoryView');       
+        }
+        else
+        {
+            // where to go after failed authentication
+            header('location: ' . URL );            
+        }  
 
     }
 

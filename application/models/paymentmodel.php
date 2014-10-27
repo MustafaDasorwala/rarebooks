@@ -16,7 +16,6 @@ class PaymentModel
 
     public function getAllPaymentProfile()
     {
-        session_start();
         $userid=$_SESSION["userid"];
         $sql = "SELECT * FROM customer_profile where customer_id=:userid";
         $query = $this->db->prepare($sql);

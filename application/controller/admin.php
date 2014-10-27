@@ -33,8 +33,8 @@ class Admin extends Controller
         {
             $admin_model = $this->loadModel('AdminModel');
             $admin_model->ValidateInventoryManager( $_POST );
-            
-            if( isset( $_SESSION['valid_user'] ))
+
+            if( isset( $_SESSION['isadmin'] ))
             {
                 // where to go after authenticating
                 header('location: ' . URL . 'inventory/inventoryView');            
@@ -42,13 +42,13 @@ class Admin extends Controller
             else
             {
                 // where to go after failed authentication
-                header('location: ' . URL . 'admin');       
+                header('location: ' . URL );       
             }
         }
         else
         {
             // where to go after failed authentication
-            header('location: ' . URL . 'admin');            
+            header('location: ' . URL );            
         }
      }
      
@@ -57,25 +57,8 @@ class Admin extends Controller
         $admin_model = $this->loadModel('AdminModel');
         $admin_model->Logout( $_POST );
 
-        $this->Login();
+        // where to go after failed authentication
+        header('location: ' . URL );            
      }
      
-     public function Registration( )
-     {
-        $admin_model = $this->loadModel('AdminModel');
-        $result = $admin_model->ValidateRegistration( $_POST );
-        if ( $result != "" )
-        {
-            echo "<script type='text/javascript'>alert( '$result' );</script>";
-            $regs = (object) $_POST;
-            require 'application/views/_templates/header.php';
-            require 'application/views/admin/index.php';
-            require 'application/views/_templates/footer.php';
-            unset($reg);
-        }
-        else
-        {
-            $this->Login( );
-        }
-     }
  }

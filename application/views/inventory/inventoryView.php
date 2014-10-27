@@ -26,7 +26,6 @@
                 <td align="right"><?php if (isset($book->quantity_on_hand)) echo $book->quantity_on_hand; ?></td>
                 <td align="right"><?php if (isset($book->date_added)) echo $book->date_added; ?></td>
                 <td><?php if (isset($book->item_description)) echo $book->item_description; ?></td>
-                <td hidden=$user ><a href="<?php echo URL . 'inventory/detailview/' . $book->item_id; ?>">Review</a></td>
            </tr>
         <?php } ?>
         </tbody>

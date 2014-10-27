@@ -49,4 +49,23 @@ class Controller
         // return new model (and pass the database connection to the model)
         return new $model_name($this->db);
     }
+    
+    function VerifyAdminLogin()
+    {
+        if(!isset($_SESSION)) 
+        {
+            session_start();
+        }
+
+        if (isset($_SESSION['valid_user']) && isset($_SESSION['isadmin']))
+        {
+            if( $_SESSION['isadmin'] == 1 )
+            {
+                // not a valid admin user
+                return 1;
+             }
+        }
+        return 0;
+    }
+
 }

@@ -45,13 +45,13 @@ class adminmodel
       {
         // if they are in the database register the user id
         $_SESSION['valid_user'] = $userid;
-        $_SESSION['is_manager'] = 1;
+        $_SESSION['isadmin'] = 1;
         $_SESSION['role_id'] = $dbResults[0]->role_id;
         $_SESSION['email'] = $dbResults[0]->email_address;
       }
       else
       {
-         $_SESSION['is_manager'] = 0;     
+         $this->Logout();     
       }
     }
 
@@ -67,7 +67,7 @@ class adminmodel
 
     public function Logout()
     {
-        unset( $_SESSION['is_manager'] );
+        unset( $_SESSION['isadmin'] );
         unset( $_SESSION['valid_user'] );
         unset( $_SESSION['role_id'] );
         unset( $_SESSION['email'] );
