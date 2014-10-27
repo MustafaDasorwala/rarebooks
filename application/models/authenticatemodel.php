@@ -8,7 +8,6 @@ class AuthenticateModel
      */
     function __construct($db) {
         try {
-            session_start();
             $this->db = $db;
         } catch (PDOException $e) {
             exit('Database connection could not be established.');
