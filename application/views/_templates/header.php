@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<?php
-    session_start();
-    if(!isset($_SESSION['userid'])){
-        $_SESSION['userid'] = 0;
-    }
-?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -27,6 +21,7 @@
     <?php
     if(!isset($_SESSION)) {
         session_start();
+        $_SESSION['userid'] = 0;
     }
 
     if (isset($_SESSION['valid_user']) && isset($_SESSION['role_id']))
