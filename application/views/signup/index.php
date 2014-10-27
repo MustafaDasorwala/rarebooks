@@ -142,7 +142,7 @@ document.getElementById("status").innerHTML=xmlhttp.responseText;
 }
 
 };
-xmlhttp.open("GET","http://localhost:8080/rarebooks/signup/getUserName/"+encodeURIComponent(username.value),true);
+xmlhttp.open("GET",'<?php echo URL;?>'+"rarebooks/signup/getUserName/"+encodeURIComponent(username.value),true);
 xmlhttp.send();
 }
 };
