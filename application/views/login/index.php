@@ -15,7 +15,8 @@ if(isset($_GET['success']) && $_GET['success']!="" && $_GET['success']=="0")
 
  <tr> <td>Password</td><td> <input type="password" name="password" value="" required></td> </tr> 
  
- <tr> <td><input id="button" type="submit" name="submit_login_user" value="Log in"></td> </tr> 
+ <tr> <td><input id="button" type="submit" name="submit_login_user" value="Log in"></td> 
+  <td><a id="signup" href="<?php echo URL . 'signup/index'; ?>">Sign up</a></td> </tr> 
  
  </form> 
  

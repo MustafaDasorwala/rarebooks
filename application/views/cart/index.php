@@ -59,15 +59,18 @@ function UpdateCart(id)
                 <td <?php if (isset($book->item_id) && isset($book->session_id)) {echo "id=".$book->session_id."-".$book->item_id."-total "; 
                 echo "name=".$book->session_id."-".$book->item_id."-total"; }?>><input type="button" <?php if (isset($book->item_id) && isset($book->session_id)) {echo "id=".$book->session_id."-".$book->item_id."-button "; 
                 echo "name=".$book->session_id."-".$book->item_id."-button"; }?> value="Update" onclick="UpdateCart(this.id);" /></td>
-                <td><a href="<?php echo URL . 'cart/deletefromcart/' . $book->item_id; ?>">x</a></td>
+                <td><a href="<?php echo URL . 'cart/deletefromcart/' . $book->item_id; ?>">X</a></td>
             </tr>
 
             <?php } } ?>
                  <tr>
-                 <a href=<?php echo URL.'cart/checkout'?> >
+                    <td>
+                 <a href=<?php if(isset($_SESSION["userid"] )&& $_SESSION["userid"]>0){ echo URL.'cart/checkout';} 
+                 else {echo URL.'login/index';}
+                 ?> >
                        <input id="button" type="button" name="ConfirmOrder" value="CheckOut"> 
                     </a>
-                 
+                 <td>
             </tr>
 
         </tbody>

@@ -22,7 +22,20 @@ echo '</script>';
 // function myBlurFunction() {
     // document.getElementById("myInput").style.backgroundColor = ""; 
 // }
+function checkInput(elem){
+    if(elem.value.length < 6){
+      //  alert("This value needs to be 6 characters long!");
+        document.getElementById("status").innerHTML="This value needs to be 6 characters long!";
+        //CheckUserName();
+        //elem.value = ""; // Reset the textbox
 
+ //document.getElementById("status").style="color:red;";
+     document.getElementById("username").style.backgroundColor="#ff6666";
+    }
+    else{
+      CheckUserName();
+    }
+}
 function validateEmail() { 
      var goodColor = "#66cc66";
     var badColor = "#ff6666";
@@ -142,7 +155,8 @@ document.getElementById("status").innerHTML=xmlhttp.responseText;
 }
 
 };
-xmlhttp.open("GET",'<?php echo URL;?>'+"rarebooks/signup/getUserName/"+encodeURIComponent(username.value),true);
+//alert('<?php echo URL;?>'+"rarebooks/signup/getUserName/"+encodeURIComponent(username.value));
+xmlhttp.open("GET",'<?php echo URL;?>'+"signup/getUserName/"+encodeURIComponent(username.value),true);
 xmlhttp.send();
 }
 };
@@ -161,7 +175,7 @@ xmlhttp.send();
  </td> </tr> 
  
  
- <tr> <td>UserName</td><td> <input type="text" id="username" name="username" onblur="CheckUserName();" placeholder="UserName" required>
+ <tr> <td>UserName</td><td> <input type="text" id="username" name="username" onblur="checkInput(this);" placeholder="UserName" required>
  
  <span id="status"></span>
  </td> </tr>

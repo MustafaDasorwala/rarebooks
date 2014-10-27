@@ -70,10 +70,11 @@ class Signup extends Controller
 		   
             //echo 'result is 1'.$result;
             session_start();
-			$_SESSION['login'] = "1";
-            $_SESSION['username']=$_POST["username"];
+			//$_SESSION['login'] = "1";
+           // $_SESSION['username']=$_POST["username"];
+
             
-		   header('location: ' . URL . 'inventory/index');
+		   header('location: ' . URL . 'login/index');
            //?success=1
 		   //1 is returned if there is no error
 		   }

@@ -37,6 +37,8 @@ class Admin extends Controller
             if( isset( $_SESSION['valid_user'] ))
             {
                 // where to go after authenticating
+                session_start();
+                $_SESSION['isadmin']=1;
                 header('location: ' . URL . 'inventory/inventoryView');            
             }
             else

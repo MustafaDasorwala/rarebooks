@@ -33,7 +33,7 @@ function filter(id)
     //alert(xmlhttp.response.Text);
     //if(cat != 'all')
     //{
-        xmlhttp.open("GET",'<?php echo URL;?>'+"/rarebooks/inventory/filterbycategory/"+cat,true);
+        xmlhttp.open("GET",'<?php echo URL;?>'+"inventory/filterbycategory/"+cat,true);
         xmlhttp.send();
         location.reload();
     //}

@@ -103,6 +103,7 @@ class LoginModel
                         $_SESSION['email_address'] = $result_row->email_address;
                         $_SESSION['login'] = 1;
                          $_SESSION['userid'] =  $result_row->userid;
+                         $_SESSION['isadmin'] = 0;
 
                        $this->UpdateCartAtLogin();
 
