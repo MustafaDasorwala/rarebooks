@@ -29,6 +29,11 @@ function toggleCheckbox(element)
    // alert(document.getElementById("expiration_date_month").value);
      document.getElementById("expiration_date_month").value=row.cells[5].innerHTML;
      //row.cells[5].innerHTML;
+     if(document.getElementById("Save").checked==true)
+     {
+      document.getElementById("Save").checked==false; 
+
+     }
     document.getElementById("Save").disabled=true;
     
         //element.checked = false;
@@ -189,7 +194,7 @@ function toggleCheckbox(element)
         <tr> <td>Shipping Address</td><td> <input type="text" id="shipaddr" name="shipaddr" value="" placeholder="Shipping Address" required></td> </tr>   
         <tr><td> 
             <input type="hidden" name="Save" value="0" />
-            <input type="checkbox" id="Save" name="Save" />
+            <input type="checkbox" id="Save" value="1" name="Save" />
             <em>Save This Profile</em>
         </td></tr>   
             <tr>
