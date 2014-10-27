@@ -18,7 +18,7 @@ ini_set("display_errors", 1);
  * Configuration for: Project URL
  * Put your URL here, for local development "127.0.0.1" or "localhost" (plus sub-folder) is fine
  */
-define('URL', 'http://localhost:8080/rarebooks/');
+define('URL', 'http://localhost/rarebooks/');
 
 /**
  * Configuration for: Database
@@ -29,5 +29,5 @@ define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'rbooks');
 define('DB_USER', 'root');
 
-define('DB_PASS', 'password');
+define('DB_PASS', 'toor');
 

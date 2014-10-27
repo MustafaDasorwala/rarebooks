@@ -28,9 +28,10 @@ function UpdateCart(id)
 
   <input type="button" <?php if (isset($book[0]->item_id)) {echo "id=".$book[0]->item_id."-button "; 
                 echo "name=".$book[0]->item_id."-button"; }?> value="Add To Cart" onclick="UpdateCart(this.id);"/>
-  <a href=<?php echo URL.'review/index/'.$book[0]->item_id?> >
+ <?php if(isset($_SESSION['userid']) && $_SESSION['userid'] !=0 ){?> <a href=<?php echo URL.'review/index/'.$book[0]->item_id?> >
   <input type="button" id = "review" name = "review" value="Add Review"/>
    </a>
+   <?php }?>
   </br>
 </div>
 <div class="container">

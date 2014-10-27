@@ -29,7 +29,7 @@ class confirmorder extends Controller
         $payment_model = $this->loadModel('PaymentModel');
         $profiles = $payment_model->getAllPaymentProfile();
 
-        $cname=$_POST["cname"];
+        //$cname=$_POST["cname"];
     
         // if (isset($_POST["Save"])) {
 
@@ -88,6 +88,15 @@ class confirmorder extends Controller
        require 'application/views/confirmorder/thanks.php';
       
     }
+
+
+     public function denied(){
+
+       $this->checkadmin1();
+       require 'application/views/confirmorder/denied.php';
+      
+    }
+
 
     //WORK ABOVE FOR PLACING ORDER
 

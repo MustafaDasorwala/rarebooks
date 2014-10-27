@@ -3,7 +3,7 @@ Due to an Invalid Credit Card Number Your Order Has been Denied . Please Try wit
 </h2>
 <script type="text/javascript">
 var timer = 3; //seconds
- website = '<?php echo URL;?>'+"rarebooks/inventory/index/)";
+ website = '<?php echo URL;?>'+"cart/checkout";
 function delayer() {
  window.location = website;
 }

@@ -25,15 +25,16 @@ echo '</script>';
 function checkInput(elem){
     if(elem.value.length < 6){
       //  alert("This value needs to be 6 characters long!");
-        document.getElementById("status").innerHTML="This value needs to be 6 characters long!";
+        document.getElementById("status2").innerHTML="This value needs to be 6 characters long!";
         //CheckUserName();
         //elem.value = ""; // Reset the textbox
 
  //document.getElementById("status").style="color:red;";
-     document.getElementById("username").style.backgroundColor="#ff6666";
+     document.getElementById("password").style.backgroundColor="#ff6666";
     }
     else{
-      CheckUserName();
+      document.getElementById("status2").innerHTML="";
+      
     }
 }
 function validateEmail() { 
@@ -175,13 +176,16 @@ xmlhttp.send();
  </td> </tr> 
  
  
- <tr> <td>UserName</td><td> <input type="text" id="username" name="username" onblur="checkInput(this);" placeholder="UserName" required>
- 
+ <tr> <td>UserName</td><td> <input type="text" id="username" onblur="CheckUserName();" name="username"  placeholder="UserName" required>
  <span id="status"></span>
+ 
  </td> </tr>
 
 
- <tr> <td>Password</td><td> <input id="pass" type="password" name="pass" placeholder="Password" required></td> </tr> 
+ <tr> <td>Password</td><td> <input id="pass" onblur="checkInput(this);" type="password" name="pass" placeholder="Password" required>
+
+<span id="status2"></span>
+ </td> </tr> 
  
  
  <tr> <td>Confirm Password </td><td><input id="cpass" type="password" placeholder="Confirm Password" onkeyup="validatePassword(); return false;" name="cpass" required>

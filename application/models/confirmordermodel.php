@@ -100,9 +100,10 @@ class confirmordermodel
 //,':cc_holder_name' => $cc_holder_name
                      $eventid = $this->db->lastInsertId();
                   //$eventid=1;
+                      header ('location: ' . URL . 'confirmorder/denied');
                         if($eventid>0)
                         {
-
+                           
                             return -1;    
 
                         }
