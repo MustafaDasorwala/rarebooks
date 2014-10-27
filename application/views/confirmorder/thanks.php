@@ -3,7 +3,7 @@ Your order has been placed successfully! Thanks for choosing us. You can close t
 </h2>
 <script type="text/javascript">
 var timer = 3; //seconds
- website = '<?php echo URL;?>'+"rarebooks/inventory/index/)";
+ website = '<?php echo URL;?>'+"rarebooks/inventory/index/";
 function delayer() {
  window.location = website;
 }
